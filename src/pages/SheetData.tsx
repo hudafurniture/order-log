@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "../@/components/ui/button";
+import { Table } from "lucide-react";
+import { DataTable } from "../components/DataTable";
 
 const SheetData = () => {
   const [data, setData] = useState<any>([]);
   const [error, setError] = useState<string | null>(null);
 
   const SPREADSHEETID = import.meta.env.VITE_SPREADSHEET_ID as string;
-  const SHEET_NAME = "MH";
+  const SHEET_NAME = "MH-מהדי";
   let range = `${SHEET_NAME}?dateTimeRenderOption=FORMATTED_STRING&majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`;
   const FINAL_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEETID}/values/${range}`;
   const FINAL_URL_TEST = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEETID}/values/Sheet2?key=${
@@ -42,9 +45,9 @@ const SheetData = () => {
             Authorization: `Bearer ${localStorage.getItem("oauth_token")}`,
           },
         });
-        console.log(response.data.values);
+        console.log(response.data.values[0]);
         console.log(response.data.values.length);
-        console.table(response.data.values);
+        //console.table(response.data.values);
 
         const rows = response.data.values;
         if (rows.length) {
@@ -74,7 +77,11 @@ const SheetData = () => {
     <div>
       <h1>Google Sheets Data</h1>
       {data.length > 0 ? (
-        <div>HH</div>
+        <div>
+          <div>HH</div>
+          <Button>Click meeee</Button>
+          <DataTable />
+        </div>
       ) : (
         //   <table>
         //     <thead>
