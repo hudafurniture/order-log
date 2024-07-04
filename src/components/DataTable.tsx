@@ -116,10 +116,10 @@ export const columns: ColumnDef<Order>[] = [
         <Button
           dir="rtl"
           variant="ghost"
-          // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           שורה
-          {/* <CaretSortIcon direction={"rtl"} className="ml-2 h-4 w-4 mx-1" /> */}
+          <CaretSortIcon direction={"rtl"} className="ml-2 h-4 w-4 mx-1" />
         </Button>
       );
     },
@@ -140,9 +140,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("customerName")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("customerName") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "customerCode",
@@ -159,9 +164,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="px-4">{row.getValue("customerCode")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("customerCode") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "orderDate",
@@ -180,7 +190,7 @@ export const columns: ColumnDef<Order>[] = [
     },
     cell: ({ row }) => {
       const date = (row.getValue("orderDate") as Date).toLocaleDateString();
-      return <div className="px-4">{date}</div>;
+      return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
   {
@@ -199,8 +209,12 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const docNumber = parseFloat(row.getValue("docNum"));
-      return <div className="text-right font-medium px-4">{docNumber}</div>;
+      const value = row.getValue("docNum") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
     },
   },
   {
@@ -218,9 +232,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("customerOrder")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("customerOrder") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "total",
@@ -238,8 +257,12 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const total = parseFloat(row.getValue("total"));
-      return <div className="text-right font-medium px-4">{total}</div>;
+      const value = row.getValue("total") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
     },
   },
   {
@@ -257,9 +280,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("agentName")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("agentName") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createdBy",
@@ -276,9 +304,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("createdBy")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("createdBy") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "notes",
@@ -296,9 +329,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("notes")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("notes") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "city",
@@ -315,9 +353,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("city")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("city") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "driver",
@@ -334,9 +377,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("driver")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("driver") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "urgency",
@@ -353,9 +401,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("urgency")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("urgency") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "hh",
@@ -372,9 +425,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("hh")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("hh") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "orderSymbol",
@@ -391,9 +449,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("orderSymbol")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("orderSymbol") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "productionDate",
@@ -414,7 +477,7 @@ export const columns: ColumnDef<Order>[] = [
       const date = (
         row.getValue("productionDate") as Date
       ).toLocaleDateString();
-      return <div className="px-4">{date}</div>;
+      return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
   {
@@ -434,7 +497,7 @@ export const columns: ColumnDef<Order>[] = [
     },
     cell: ({ row }) => {
       const date = (row.getValue("supplyDate") as Date).toLocaleDateString();
-      return <div className="px-4">{date}</div>;
+      return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
   {
@@ -456,7 +519,7 @@ export const columns: ColumnDef<Order>[] = [
       const date = (
         row.getValue("coordinateDate") as Date
       ).toLocaleDateString();
-      return <div className="px-4">{date}</div>;
+      return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
   {
@@ -474,9 +537,14 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize px-4">{row.getValue("review")}</div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("review") as string;
+      return (
+        <div className="capitalize px-4">
+          {value !== undefined && value !== null ? value : ""}
+        </div>
+      );
+    },
   },
   {
     id: "actions",
@@ -615,10 +683,10 @@ export function DataTable({ data }: DataTableProps) {
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id as string}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id as string}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -635,7 +703,7 @@ export function DataTable({ data }: DataTableProps) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
+                  key={row.id as string}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -667,7 +735,7 @@ export function DataTable({ data }: DataTableProps) {
           {table.getFilteredRowModel().rows.length} שורות נבחרו.
         </div>
         <div className="space-x-2">
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
@@ -684,7 +752,7 @@ export function DataTable({ data }: DataTableProps) {
             className="h-7"
           >
             אחרי
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
