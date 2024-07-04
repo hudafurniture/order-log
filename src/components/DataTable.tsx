@@ -37,70 +37,50 @@ import {
   TableHeader,
   TableRow,
 } from "../@/components/ui/table";
+import { Order } from "../models/Order";
 
-const data: Order[] = [
-  {
-    customerName: "GEGE",
-    customerCode: 1,
-    orderDate: new Date(Date.now()),
-    docNum: 11,
-    customerOrder: "344/HH",
-    total: 1130,
-    agentName: "goku",
-    createdBy: "tb",
-    notes: "nothing",
-    city: "Haifa",
-    driver: "hamido",
-    urgency: "urgenttttt",
-    hh: "550",
-    orderSymbol: "32GT",
-    productionDate: new Date(Date.now()),
-    supplyDate: new Date(Date.now()),
-    coordinateDate: new Date(Date.now()),
-    review: "good",
-  },
-  {
-    customerName: "DEDEEE",
-    customerCode: 2,
-    orderDate: new Date(Date.now()),
-    docNum: 22,
-    customerOrder: "344/HH",
-    total: 1130,
-    agentName: "goku",
-    createdBy: "tb",
-    notes: "nothing",
-    city: "Haifa",
-    driver: "hamido",
-    urgency: "urgenttttt",
-    hh: "550",
-    orderSymbol: "32GT",
-    productionDate: new Date(Date.now()),
-    supplyDate: new Date(Date.now()),
-    coordinateDate: new Date(Date.now()),
-    review: "good",
-  },
-];
-
-export type Order = {
-  customerName: string;
-  customerCode: number;
-  orderDate: Date;
-  docNum: number;
-  customerOrder: string;
-  total: number;
-  agentName: string;
-  createdBy: string;
-  notes: string;
-  city: string;
-  driver: string;
-  urgency: string;
-  hh: string;
-  orderSymbol: string;
-  productionDate: Date;
-  supplyDate: Date;
-  coordinateDate: Date;
-  review: string;
-};
+// const data: Order[] = [
+//   {
+//     customerName: "GEGE",
+//     customerCode: 1,
+//     orderDate: new Date(Date.now()),
+//     docNum: 11,
+//     customerOrder: "344/HH",
+//     total: 1130,
+//     agentName: "goku",
+//     createdBy: "tb",
+//     notes: "nothing",
+//     city: "Haifa",
+//     driver: "hamido",
+//     urgency: "urgenttttt",
+//     hh: "550",
+//     orderSymbol: "32GT",
+//     productionDate: new Date(Date.now()),
+//     supplyDate: new Date(Date.now()),
+//     coordinateDate: new Date(Date.now()),
+//     review: "good",
+//   },
+//   {
+//     customerName: "DEDEEE",
+//     customerCode: 2,
+//     orderDate: new Date(Date.now()),
+//     docNum: 22,
+//     customerOrder: "344/HH",
+//     total: 1130,
+//     agentName: "goku",
+//     createdBy: "tb",
+//     notes: "nothing",
+//     city: "Haifa",
+//     driver: "hamido",
+//     urgency: "urgenttttt",
+//     hh: "550",
+//     orderSymbol: "32GT",
+//     productionDate: new Date(Date.now()),
+//     supplyDate: new Date(Date.now()),
+//     coordinateDate: new Date(Date.now()),
+//     review: "good",
+//   },
+// ];
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -484,35 +464,43 @@ export const columns: ColumnDef<Order>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const order = row.original;
-
-      return (
-        <DropdownMenu dir="rtl">
-          <DropdownMenuTrigger asChild dir="rtl">
-            <Button variant="ghost" className="h-8 w-8 p-0" dir="rtl">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(order.customerCode.toString())
-              }
-            >
-              Copy order ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View order details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      if (order.customerCode === undefined) {
+        return <></>;
+      } else {
+        return (
+          <DropdownMenu dir="rtl">
+            <DropdownMenuTrigger asChild dir="rtl">
+              <Button variant="ghost" className="h-8 w-8 p-0" dir="rtl">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() =>
+                  order.customerCode !== undefined &&
+                  navigator.clipboard.writeText(order.customerCode.toString())
+                }
+              >
+                Copy order ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View customer</DropdownMenuItem>
+              <DropdownMenuItem>View order details</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      }
     },
   },
 ];
 
-export function DataTable() {
+interface DataTableProps {
+  data: Order[];
+}
+
+export function DataTable({ data }: DataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -537,6 +525,12 @@ export function DataTable() {
       columnFilters,
       columnVisibility,
       rowSelection,
+    },
+    initialState: {
+      //This line
+      pagination: {
+        pageSize: 10000,
+      },
     },
   });
 

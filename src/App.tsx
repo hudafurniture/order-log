@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "./context/AuthContext";
+import { ThemeProvider } from "../src/@/components/theme-provider";
+import { Navbar } from "../src/components/Nav/Nav";
 
 function App() {
   const navigate = useNavigate();
@@ -18,14 +20,17 @@ function App() {
 
   return (
     <div>
-      <div>
-        {token ? (
-          <button onClick={() => logout()}>Logout</button>
-        ) : (
-          <button onClick={() => login()}>Login with Google</button>
-        )}
-      </div>
-      <Outlet />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Navbar />
+        <div>
+          {token ? (
+            <button onClick={() => logout()}>Logout</button>
+          ) : (
+            <button onClick={() => login()}>Login with Google</button>
+          )}
+        </div>
+        <Outlet />
+      </ThemeProvider>
     </div>
   );
 }
