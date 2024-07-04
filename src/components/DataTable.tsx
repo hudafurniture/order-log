@@ -38,6 +38,7 @@ import {
   TableRow,
 } from "../@/components/ui/table";
 import { Order } from "../models/Order";
+import { useEffect } from "react";
 
 // const data: Order[] = [
 //   {
@@ -106,6 +107,23 @@ export const columns: ColumnDef<Order>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "rowNum",
+    meta: "שורה",
+    header: ({ column }) => {
+      return (
+        <Button
+          dir="rtl"
+          variant="ghost"
+          // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          שורה
+          {/* <CaretSortIcon direction={"rtl"} className="ml-2 h-4 w-4 mx-1" /> */}
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="px-4">{row.index + 1}</div>,
   },
   {
     accessorKey: "customerName",
@@ -264,6 +282,7 @@ export const columns: ColumnDef<Order>[] = [
   },
   {
     accessorKey: "notes",
+    id: "notes",
     meta: "הערות",
     header: ({ column }) => {
       return (
@@ -505,9 +524,28 @@ export function DataTable({ data }: DataTableProps) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
+  const getColVisibility = () => {
+    let visibilityObject = {
+      notes: false,
+    };
+    const visibility = localStorage.getItem("columns_visibility");
+    if (visibility) {
+      visibilityObject = JSON.parse(visibility);
+    }
+    return visibilityObject;
+  };
+
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    React.useState<VisibilityState>(getColVisibility());
   const [rowSelection, setRowSelection] = React.useState({});
+
+  useEffect(() => {
+    localStorage.setItem(
+      "columns_visibility",
+      JSON.stringify(columnVisibility)
+    );
+  }, [columnVisibility]);
 
   const table = useReactTable({
     data,
@@ -527,7 +565,6 @@ export function DataTable({ data }: DataTableProps) {
       rowSelection,
     },
     initialState: {
-      //This line
       pagination: {
         pageSize: 10000,
       },
@@ -561,7 +598,7 @@ export function DataTable({ data }: DataTableProps) {
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className=""
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)

@@ -1,4 +1,5 @@
 export type Order = {
+    staticDataIndex?: number;
     customerName?: string | ""; 
     customerCode: number;
     orderDate?: Date | ""; 
@@ -20,6 +21,7 @@ export type Order = {
   };
 
   const columnMapping: Record<string, keyof Order> = {
+    "staticDataIndex": "staticDataIndex",
     "שם לקוח": "customerName",
     "קוד לקוח": "customerCode",
     "ת.הפקה": "orderDate",
@@ -42,6 +44,7 @@ export type Order = {
 
   export function mapSheetToOrders(excelData: any[]): Order[] {
     return excelData.map(row => ({
+      staticDataIndex: row[columnMapping["staticDataIndex"]],
       customerName: row[columnMapping["customerName"]],
       customerCode: row[columnMapping["customerCode"]],
       orderDate: new Date(row[columnMapping["orderDate"]]),

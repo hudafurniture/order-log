@@ -43,8 +43,9 @@ const SheetData = () => {
         const orders: Order[] = [];
 
         if (rows.length) {
-          rows.slice(1).forEach((row: any[]) => {
+          rows.slice(1).forEach((row: any[], index: number) => {
             orders.push({
+              staticDataIndex: index + 1,
               customerName: row[0] ? row[0] : "",
               customerCode: row[1] ? row[1] : 0,
               orderDate: new Date(row[2]) ? new Date(row[2]) : new Date(),
@@ -69,7 +70,11 @@ const SheetData = () => {
               review: row[17],
             });
           });
-          setData(orders);
+          const rowsData = orders.map((row, index) => ({
+            ...row,
+            staticRowNumber: index + 1, // Add the static row number, starting from 1
+          }));
+          setData(rowsData);
         }
       } catch (error) {
         setError("Error fetching data from Google Sheets");
