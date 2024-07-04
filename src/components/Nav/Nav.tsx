@@ -6,12 +6,12 @@ import { useAuth } from "../../context/AuthContext";
 
 export const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState<boolean>(false);
-  const { token, logout } = useAuth();
+  const { logout, token } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     }
   }, [token]);
 
@@ -21,6 +21,7 @@ export const Navbar = () => {
 
   const handleSignout = () => {
     logout();
+    navigate("/login");
   };
 
   return (
@@ -31,12 +32,18 @@ export const Navbar = () => {
           <Hamburger />
         </div>
         <div className={`nav-elements  ${showNavbar && "active"}`}>
-          <ul>
+          <ul dir="rtl">
             <li>
-              <NavLink to="/data">Home</NavLink>
+              <NavLink to="/data">הזמנות</NavLink>
             </li>
-            <li onClick={handleSignout} className="hover:cursor-pointer ">
-              Logout
+            <li>
+              <NavLink to="/stats">סטסיטיקה</NavLink>
+            </li>
+            <li
+              onClick={handleSignout}
+              className="hover:cursor-pointer px-6 mx-8"
+            >
+              יציאה
             </li>
           </ul>
         </div>
