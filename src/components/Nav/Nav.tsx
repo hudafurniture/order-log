@@ -41,7 +41,7 @@ export const Navbar = () => {
             </li>
             <li
               onClick={handleSignout}
-              className="hover:cursor-pointer px-6 mx-8"
+              className="hover:cursor-pointer px-6 mx-8 logout-btn"
             >
               יציאה
             </li>

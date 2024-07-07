@@ -23,7 +23,7 @@ const SheetData = () => {
   }, [token]);
 
   const SPREADSHEETID = import.meta.env.VITE_SPREADSHEET_ID as string;
-  const CACHE_DATA_EXP_TIME = 300000; // 5 Minutes (in milliseconds)
+  const CACHE_DATA_EXP_TIME = 600000; // 10 Minutes (in milliseconds)
 
   const getDataFromLocalStorage = () => {
     console.log("Getting cached data");
@@ -82,7 +82,7 @@ const SheetData = () => {
           const orders: Order[] = [];
 
           if (rows.length) {
-            rows.slice(1).forEach((row: any[], index: number) => {
+            rows.slice(1).forEach((row: any[]) => {
               orders.push({
                 customerName: row[0] ? row[0] : "",
                 customerCode: row[1] ? row[1] : 0,
@@ -179,13 +179,15 @@ const SheetData = () => {
 
   return (
     <div>
-      <h1>Google Sheets Data</h1>
+      <h1 className="text-center mt-3 font-bold text-sm">
+        הזמנות פתוחות לפי מחסן
+      </h1>
       {data && data.length > 0 ? (
         <div>
           <DataTable data={data} />
         </div>
       ) : (
-        <div>
+        <div className="text-center">
           <h1>No data available</h1>
         </div>
       )}
