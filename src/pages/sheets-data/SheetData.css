@@ -1,0 +1,28 @@
+.pageContainer{
+    height: 94vh;
+}
+
+.loadingGif{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60vw;
+    height: 80vh;
+    background-size: contain;
+    background-position: center;
+    width: 60%;
+    z-index: -1;
+    padding: 4px;
+    background-size: calc(100% - 220px);
+    background-repeat: no-repeat;
+    margin-top: -2vh;
+}
+
+
+@media screen and (max-width: 768px) {
+    .loadingGif{
+        width: 100%;
+        background-size: calc(100% - 20px);
+    }
+}

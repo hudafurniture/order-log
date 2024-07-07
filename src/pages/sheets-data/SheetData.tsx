@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { DataTable } from "../components/DataTable";
-import { Order } from "../models/Order";
+import { useAuth } from "../../context/AuthContext";
+import { DataTable } from "../../components/DataTable";
+import { Order } from "../../models/Order";
 import { useNavigate } from "react-router-dom";
+import loading1 from "../../assets/pictures/loading1.gif";
+import "./SheetData.css";
 
 export function isDate(variable: any): boolean {
   return variable instanceof Date;
@@ -174,21 +176,31 @@ const SheetData = () => {
   }, []);
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen mt-[-5vh] font-light dir-rtl">
+        {error === "Error fetching data from Google Sheets"
+          ? "הרשאה לא בתוקף, אנא התחבר שוב למערכת"
+          : "..ביצעת בקשות רבות לשרת, אנא נסה שוב בעוד כמה דקות"}
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1 className="text-center mt-3 font-bold text-sm">
-        הזמנות פתוחות לפי מחסן
-      </h1>
+    <div className="pageContainer">
+      <h1 className="text-center mt-5 font-bold">הזמנות פתוחות לפי מחסן</h1>
       {data && data.length > 0 ? (
         <div>
           <DataTable data={data} />
         </div>
       ) : (
-        <div className="text-center">
-          <h1>No data available</h1>
+        <div className="text-center mt-3 font-bold">
+          <h1 className="dir-rtl font-light">..טוען נתונים</h1>
+          <div
+            className="loadingGif h-screen"
+            style={{
+              backgroundImage: `url(${loading1})`,
+            }}
+          ></div>
         </div>
       )}
       ;
