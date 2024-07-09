@@ -12,7 +12,7 @@ const Stats = () => {
     }
   }, [token]);
   return (
-    <div dir="rtl" className="p-2 px-4">
+    <div dir="rtl" className="p-3 px-4">
       <h1>בקרוב..</h1>
     </div>
   );
