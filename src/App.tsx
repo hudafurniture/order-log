@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { ThemeProvider } from "../src/@/components/theme-provider";
-import { Navbar } from "../src/components/Nav/Nav";
+import { Navbar } from "./components/nav/Nav";
 
 function App() {
   const location = useLocation();

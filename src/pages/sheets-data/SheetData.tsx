@@ -6,10 +6,7 @@ import { Order } from "../../models/Order";
 import { useNavigate } from "react-router-dom";
 import loading1 from "../../assets/pictures/loading1.gif";
 import "./SheetData.css";
-
-export function isDate(variable: any): boolean {
-  return variable instanceof Date;
-}
+import Sidebar from "../../components/sidebar/Sidebar";
 
 const SheetData = () => {
   const [data, setData] = useState<Order[]>([]);
@@ -88,7 +85,7 @@ const SheetData = () => {
               orders.push({
                 customerName: row[0] ? row[0] : "",
                 customerCode: row[1] ? row[1] : 0,
-                orderDate: new Date(row[2]) ? new Date(row[2]) : "",
+                orderDate: row[2] !== "" ? new Date(row[2]) : "",
                 docNum: row[3] ? row[3] : 0,
                 customerOrder: row[4] ? row[4] : "",
                 total: row[5] ? row[5] : 0,
@@ -100,9 +97,9 @@ const SheetData = () => {
                 urgency: row[11] ? row[11] : "",
                 hh: row[12] ? row[12] : "",
                 orderSymbol: row[13] ? row[13] : "",
-                productionDate: new Date(row[14]) ? new Date(row[14]) : "",
-                supplyDate: new Date(row[15]) ? new Date(row[15]) : "",
-                coordinateDate: new Date(row[16]) ? new Date(row[16]) : "",
+                productionDate: row[14] !== "" ? new Date(row[14]) : "",
+                supplyDate: row[15] !== "" ? new Date(row[15]) : "",
+                coordinateDate: row[16] !== "" ? new Date(row[16]) : "",
                 review: row[17],
               });
             });
@@ -140,7 +137,7 @@ const SheetData = () => {
             ? cachedOrder.customerName
             : "",
           customerCode: cachedOrder.customerCode ? cachedOrder.customerCode : 0,
-          orderDate: isDate(new Date(cachedOrder.orderDate))
+          orderDate: cachedOrder.orderDate
             ? new Date(cachedOrder.orderDate)
             : "",
           docNum: cachedOrder.docNum ? cachedOrder.docNum : 0,
@@ -156,13 +153,13 @@ const SheetData = () => {
           urgency: cachedOrder.urgency ? cachedOrder.urgency : "",
           hh: cachedOrder.hh ? cachedOrder.hh : "",
           orderSymbol: cachedOrder.orderSymbol ? cachedOrder.orderSymbol : "",
-          productionDate: isDate(new Date(cachedOrder.productionDate))
+          productionDate: cachedOrder.productionDate
             ? new Date(cachedOrder.productionDate)
             : "",
-          supplyDate: isDate(new Date(cachedOrder.supplyDate))
+          supplyDate: cachedOrder.supplyDate
             ? new Date(cachedOrder.supplyDate)
             : "",
-          coordinateDate: isDate(new Date(cachedOrder.coordinateDate))
+          coordinateDate: cachedOrder.coordinateDate
             ? new Date(cachedOrder.coordinateDate)
             : "",
           review: cachedOrder.review ? cachedOrder.review : "",
@@ -187,10 +184,19 @@ const SheetData = () => {
 
   return (
     <div className="pageContainer">
-      <h1 className="text-center mt-5 font-bold">הזמנות פתוחות לפי מחסן</h1>
       {data && data.length > 0 ? (
         <div>
-          <DataTable data={data} />
+          <div className="pageContainer flex flex-row">
+            <div className="tableContainer w-[calc(100vw-300px)]">
+              <h1 className="text-center mt-5 font-bold">
+                הזמנות פתוחות לפי מחסן
+              </h1>
+              <DataTable data={data} />
+            </div>
+            <div className="sidebarContainer w-[300px] shadow-custom ml-2">
+              <Sidebar />
+            </div>
+          </div>
         </div>
       ) : (
         <div className="text-center mt-3 font-bold">

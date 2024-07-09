@@ -39,6 +39,7 @@ import {
 } from "../@/components/ui/table";
 import { Order } from "../models/Order";
 import { useEffect } from "react";
+import { isDate } from "../lib/isDate";
 
 // const data: Order[] = [
 //   {
@@ -189,7 +190,9 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = (row.getValue("orderDate") as Date).toLocaleDateString();
+      const date = isDate(row.getValue("orderDate") as Date)
+        ? (row.getValue("orderDate") as Date).toLocaleDateString()
+        : (row.getValue("orderDate") as Date).toString();
       return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
@@ -474,9 +477,9 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = (
-        row.getValue("productionDate") as Date
-      ).toLocaleDateString();
+      const date = isDate(row.getValue("productionDate") as Date)
+        ? (row.getValue("productionDate") as Date).toLocaleDateString()
+        : (row.getValue("productionDate") as Date).toString();
       return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
@@ -496,7 +499,9 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = (row.getValue("supplyDate") as Date).toLocaleDateString();
+      const date = isDate(row.getValue("supplyDate") as Date)
+        ? (row.getValue("supplyDate") as Date).toLocaleDateString()
+        : (row.getValue("supplyDate") as Date).toString();
       return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
@@ -516,9 +521,9 @@ export const columns: ColumnDef<Order>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = (
-        row.getValue("coordinateDate") as Date
-      ).toLocaleDateString();
+      const date = isDate(row.getValue("coordinateDate") as Date)
+        ? (row.getValue("coordinateDate") as Date).toLocaleDateString()
+        : (row.getValue("coordinateDate") as Date).toString();
       return date !== "Invalid Date" && <div className="px-4">{date}</div>;
     },
   },
