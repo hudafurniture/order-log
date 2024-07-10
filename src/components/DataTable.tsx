@@ -648,7 +648,7 @@ export function DataTable({ data }: DataTableProps) {
     <div className="w-full" dir="rtl">
       <div className="flex items-center py-4">
         <Input
-          placeholder="חיפוש לקוח..."
+          placeholder="חיפוש שם לקוח..."
           value={
             (table.getColumn("customerName")?.getFilterValue() as string) ?? ""
           }

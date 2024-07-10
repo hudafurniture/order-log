@@ -37,7 +37,10 @@ export const Navbar = () => {
               <NavLink to="/data">הזמנות</NavLink>
             </li>
             <li>
-              <NavLink to="/stats">סטסיטיקה</NavLink>
+              <NavLink to="/history">היסטוריה</NavLink>
+            </li>
+            <li>
+              <NavLink to="/stats">סטטיסטיקה</NavLink>
             </li>
             <li
               onClick={handleSignout}
