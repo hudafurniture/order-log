@@ -62,3 +62,12 @@ export type Order = {
       review: row[columnMapping["review"]],
     }));
   }
+
+  export function getKeyNameByStringValue(value: string): string | undefined {
+    for (const [key, val] of Object.entries(columnMapping)) {
+      if (val === value) {
+        return key;
+      }
+    }
+    return undefined; // Return undefined if the value is not found
+  }

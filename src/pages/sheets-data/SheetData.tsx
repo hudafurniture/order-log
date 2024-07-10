@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { DataTable } from "../../components/DataTable";
+import { DataTable } from "../../components/data-table/DataTable";
 import { Order } from "../../models/Order";
 import { useNavigate } from "react-router-dom";
 import loading1 from "../../assets/pictures/loading1.gif";
