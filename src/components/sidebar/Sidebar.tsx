@@ -16,13 +16,15 @@ interface SidebarProps {
 
 const Sidebar = ({ data }: SidebarProps) => {
   const [uniqueDriversArray, setUniqueDriversArray] = useState<string[]>([]);
+  const zkryaArr = ["אבו זכריה", "אבו בקריא", "אבו זקריא", "אבו זקריה"];
 
   useEffect(() => {
     //drivers
     const drivers = data
       .map((order) => order.driver?.trim())
       .filter((driver) => driver !== "")
-      .filter((driver) => driver !== undefined);
+      .filter((driver) => driver !== undefined)
+      .filter((driver) => (zkryaArr.includes(driver) ? false : true));
     const uniqueDrivers = new Set(drivers);
     const uniqueDriversArr = Array.from(uniqueDrivers);
     const sortedUniqueDriversArr = uniqueDriversArr.sort((a, b) =>

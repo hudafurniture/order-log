@@ -6,16 +6,32 @@ interface CheckboxProps {
 }
 
 const Checkbox = ({ category, id }: CheckboxProps) => {
+  const zkryaArr = ["אבו זכריה", "אבו בקריא", "אבו זקריא", "אבו זקריה"];
   const { filteredDrivers, setFilteredDrivers } = useFilter();
 
   const handleCheckedBox = (e: any) => {
-    if (filteredDrivers.includes(e.target.value)) {
-      setFilteredDrivers(
-        filteredDrivers.filter((driver) => driver !== e.target.value)
-      );
+    const targetDriver = e.target.value;
+
+    if (filteredDrivers.includes(targetDriver)) {
+      if (targetDriver === "אבו זכריא") {
+        setFilteredDrivers(
+          filteredDrivers.filter(
+            (driver) => !zkryaArr.includes(driver) && driver !== targetDriver
+          )
+        );
+      } else {
+        setFilteredDrivers(
+          filteredDrivers.filter((driver) => driver !== targetDriver)
+        );
+      }
       return;
     }
-    setFilteredDrivers([...filteredDrivers, e.target.value]);
+
+    if (targetDriver === "אבו זכריא") {
+      setFilteredDrivers([...filteredDrivers, ...zkryaArr, targetDriver]);
+    } else {
+      setFilteredDrivers([...filteredDrivers, targetDriver]);
+    }
   };
 
   return (
