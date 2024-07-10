@@ -7,13 +7,17 @@ import { useNavigate } from "react-router-dom";
 import loading1 from "../../assets/pictures/loading1.gif";
 import "./SheetData.css";
 import Sidebar from "../../components/sidebar/Sidebar";
+import { useFilter } from "../../context/FilterContext";
 
 const SheetData = () => {
   const [data, setData] = useState<Order[]>([]);
+  const [filterData, setFilterData] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const { token } = useAuth();
   const navigate = useNavigate();
+
+  const { filteredDrivers } = useFilter();
 
   useEffect(() => {
     if (!token) {
@@ -130,47 +134,59 @@ const SheetData = () => {
       cachedData.length > 0
     ) {
       console.log("Data found in cache");
+      // console.log(filteredDrivers);
+
+      setData(cachedData);
+
       const ordersArr: Order[] = [];
-      cachedData.forEach((cachedOrder) => {
-        ordersArr.push({
-          customerName: cachedOrder.customerName
-            ? cachedOrder.customerName
-            : "",
-          customerCode: cachedOrder.customerCode ? cachedOrder.customerCode : 0,
-          orderDate: cachedOrder.orderDate
-            ? new Date(cachedOrder.orderDate)
-            : "",
-          docNum: cachedOrder.docNum ? cachedOrder.docNum : 0,
-          customerOrder: cachedOrder.customerOrder
-            ? cachedOrder.customerOrder
-            : "",
-          total: cachedOrder.total ? cachedOrder.total : 0,
-          agentName: cachedOrder.agentName ? cachedOrder.agentName : "",
-          createdBy: cachedOrder.createdBy ? cachedOrder.createdBy : "",
-          notes: cachedOrder.notes ? cachedOrder.notes : "",
-          city: cachedOrder.city ? cachedOrder.city : "",
-          driver: cachedOrder.driver ? cachedOrder.driver : "",
-          urgency: cachedOrder.urgency ? cachedOrder.urgency : "",
-          hh: cachedOrder.hh ? cachedOrder.hh : "",
-          orderSymbol: cachedOrder.orderSymbol ? cachedOrder.orderSymbol : "",
-          productionDate: cachedOrder.productionDate
-            ? new Date(cachedOrder.productionDate)
-            : "",
-          supplyDate: cachedOrder.supplyDate
-            ? new Date(cachedOrder.supplyDate)
-            : "",
-          coordinateDate: cachedOrder.coordinateDate
-            ? new Date(cachedOrder.coordinateDate)
-            : "",
-          review: cachedOrder.review ? cachedOrder.review : "",
+      cachedData
+        .filter((order) =>
+          filteredDrivers.length > 0
+            ? filteredDrivers.includes(order.driver)
+            : true
+        )
+        .forEach((cachedOrder) => {
+          ordersArr.push({
+            customerName: cachedOrder.customerName
+              ? cachedOrder.customerName
+              : "",
+            customerCode: cachedOrder.customerCode
+              ? cachedOrder.customerCode
+              : 0,
+            orderDate: cachedOrder.orderDate
+              ? new Date(cachedOrder.orderDate)
+              : "",
+            docNum: cachedOrder.docNum ? cachedOrder.docNum : 0,
+            customerOrder: cachedOrder.customerOrder
+              ? cachedOrder.customerOrder
+              : "",
+            total: cachedOrder.total ? cachedOrder.total : 0,
+            agentName: cachedOrder.agentName ? cachedOrder.agentName : "",
+            createdBy: cachedOrder.createdBy ? cachedOrder.createdBy : "",
+            notes: cachedOrder.notes ? cachedOrder.notes : "",
+            city: cachedOrder.city ? cachedOrder.city : "",
+            driver: cachedOrder.driver ? cachedOrder.driver : "",
+            urgency: cachedOrder.urgency ? cachedOrder.urgency : "",
+            hh: cachedOrder.hh ? cachedOrder.hh : "",
+            orderSymbol: cachedOrder.orderSymbol ? cachedOrder.orderSymbol : "",
+            productionDate: cachedOrder.productionDate
+              ? new Date(cachedOrder.productionDate)
+              : "",
+            supplyDate: cachedOrder.supplyDate
+              ? new Date(cachedOrder.supplyDate)
+              : "",
+            coordinateDate: cachedOrder.coordinateDate
+              ? new Date(cachedOrder.coordinateDate)
+              : "",
+            review: cachedOrder.review ? cachedOrder.review : "",
+          });
         });
-      });
-      setData(ordersArr);
+      setFilterData(ordersArr);
     } else {
       console.log("Data not found in cache. Continue fetching from Google");
       fetchDataFromGoogle();
     }
-  }, []);
+  }, [JSON.stringify(data), JSON.stringify(filteredDrivers)]);
 
   if (error) {
     return (
@@ -187,14 +203,14 @@ const SheetData = () => {
       {data && data.length > 0 ? (
         <div>
           <div className="pageContainer flex flex-row">
-            <div className="tableContainer w-[calc(100vw-300px)]">
+            <div className="tableContainer w-[calc(100vw-260px)]">
               <h1 className="text-center mt-5 font-bold">
                 הזמנות פתוחות לפי מחסן
               </h1>
-              <DataTable data={data} />
+              <DataTable data={filterData} />
             </div>
-            <div className="sidebarContainer w-[300px] shadow-custom ml-2">
-              <Sidebar />
+            <div className="sidebarContainer w-[260px] shadow-custom ml-2">
+              <Sidebar data={data} />
             </div>
           </div>
         </div>
