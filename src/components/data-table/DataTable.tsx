@@ -105,12 +105,12 @@ export function DataTable({ data }: DataTableProps) {
             <Input
               placeholder={`חיפוש ${getKeyNameByStringValue(searchColumn)}...`}
               value={
-                (table.getColumn("customerName")?.getFilterValue() as string) ??
+                (table.getColumn(searchColumn)?.getFilterValue() as string) ??
                 ""
               }
               onChange={(event) =>
                 table
-                  .getColumn("customerName")
+                  .getColumn(searchColumn)
                   ?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
